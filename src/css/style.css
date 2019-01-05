@@ -1,0 +1,53 @@
+
+
+section {
+  height: 500px;
+}
+
+#footer {
+  background-color: darkgray;
+}
+
+.billboard {
+  margin-top: 150px;
+  margin-bottom: 500px;
+}
+
+.billboard-logo {
+  width: 500px;
+  height: 100px;
+}
+
+.billboard button {
+  margin-top: 50px;
+}
+
+.border-image {
+  filter: grayscale(100%);
+  margin-top: 50px;
+  text-align: center;
+  /* opacity: 0.5; */
+  background-image: url('/images/network.png');
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.section-header {
+  margin-bottom: 200px;
+}
+
+.partner-logo img {
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+  max-width: 300px;
+}
+
+.mt50 {
+  margin-top: 50px;
+}
+
+.mt15 {
+  margin-top: 15px;
+}
+
+.pt50 {
+  padding-top: 50px;
+}
