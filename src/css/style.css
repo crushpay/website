@@ -51,3 +51,7 @@ section {
 .pt50 {
   padding-top: 50px;
 }
+
+.example-post {
+  border: 1 px solid black;
+}
