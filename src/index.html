@@ -1,109 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>crushpay</title>
+  <title>CRUSH PAY</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">CRUSH PAY</a>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#team">Team</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container billboard">
+    <div class="row">
+      <div class="col-lg-10 offset-1 text-center logo-container">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">crushpay</a>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#company">Team</a>
-            </li>
-          </ul>
+        <img src="/images/lightning.png" class="billboard-logo img-fluid" />
+        <!-- <h1 class="mt-5">Content Payment Button</h1> -->
+        <p class="lead">
+          </h4>
       </div>
-    </nav>
+      <div class="col-lg-10 offset-1 example-post">
+        <div class="row post-header">
 
-    <div class="container billboard">
-      <div class="row">
-        <div class="col-lg-10 offset-1 text-center">
-            <img src="/images/lightning.png" class="billboard-logo" />
-          <h1 class="mt-5">Content Payment Button</h1>
-          <p class="lead"></h4>
-        </div>
-        <div class="col-lg-10 offset-1 text-center example-post">
-          <div class="row">
-            <div class="col-md-2 post-user">
-              user photo
-              <img class="user-photo" src="images/chad.jpeg" />
-            </div>
-            <div class="col-md-5 post-title"> 
-              Seoul Bitcoin Meetup Hackathon
-            </div>
-          </div>
-          <div class="row post-content" >
-            "In 2010, a crack commando unit was sent to prison by a military court
-             for a crime they didn't commit. These men promptly escaped from a maximum 
-             security North-Korean stockade to the Seoul underground.
-             Today, still wanted by the government they survive as soldiers of a team of bitcoin hackers. 
-             If you have a problem, if no one else can help, and if you can find them....maybe you can hire The-CrushTeam.
-             If you don't know how to find them, take advantage of the power of the lightning network. Using CrushPay,
-             you contact a friend who might know one of them. If he doesn't, he will get in touch with someone else who might
-             know them. In the end, if they decide to help you, all these people in the chain will get rewarded.
-             The blockchain meets the network effect!" LOL, I just came here for the pizza!
-          </div>
-          <div class="row post-footer">
-            
-            <div class="crushpay-bar">
-              <button>Crush Pay</button>
-            </div>
-          </div>
-
+          <div class="col-md-10 post-title text-left">
+            <h3>CrushPay montetizes networks and content with a Bitcoin Lightning SDK crowdfunding button.</h3>
           </div>
         </div>
+        <div class="row post-content text-left">
+          "In 2010, a crack commando unit was sent to prison by a military court
+          for a crime they didn't commit. These men promptly escaped from a maximum
+          security North-Korean stockade to the Seoul underground.
+          Today, still wanted by the government they survive as soldiers of a team of bitcoin hackers.
+          If you have a problem, if no one else can help, and if you can find them....maybe you can hire The-CrushTeam.
+          If you don't know how to find them, take advantage of the power of the lightning network. Using CrushPay,
+          you contact a friend who might know one of them. If he doesn't, he will get in touch with someone else who
+          might
+          know them. In the end, if they decide to help you, all these people in the chain will get rewarded.
+          The blockchain meets the network effect!" LOL, I just came here for the pizza! -Crush Team
+          </p>
+
+          </div>
+        <div id='crush-bar' class="row post-footer">
+          <div class="col-md-2">
+            <div id="loader" class="loader"></div>
+          </div>
+
+          <div id="crush-button" class="col-md-4 crush-button">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <!-- <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1"> -->
+              <input class="form-control" type="number" id="amount-input" name="amount" />
+              <div class="input-group-append">
+                <button class="btn btn-warning" type="button" onClick="createPaymentRequest()">CRUSH BUTTON</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 crush-bar">
+            <div id="payment-id"></div>
+            <div id="payment-address"></div>
+            <div id="payment-copy-button">
+              <p>
+                <a href="https://htlc.me/" target="_blank">Get free testnet Bitcoins and Lightning wallet here</a>
+              </p>
+            </div>
+            <div id="payment-amount"></div>
+          </div>
+          <div id="payment-receipt" class="payment-receipt"></div>
+        </div>
+
       </div>
     </div>
+  </div>
+  </div>
 
-    <section id="company" class="container">
-      <div class="text-center">
-          <h2>Team</h2>
-        <hr>
-      </div>
-      <div class="row center">
-        <div class="col-md-2">
-          Chad
-          <img class="user-photo" src="images/chad.jpeg" />
+  <section id="team" class="container team">
+    <div class="text-center">
+      <h2>Team</h2>
+      <hr>
+    </div>
+    <div class="row d-flex team-content">
+      <div class="col-md-2">
+        <div class="row">
+          <p>Chad</p>
         </div>
-        <div class="col-md-2">
-          Nicolas
+        <div class="row">
+          <img class="user-photo" src="images/chad-self.jpg" />
+        </div>
+        <hr>  
+      </div>
+      <div class="col-md-2">
+        <div class="row">
+          <p>Nicolas</p>
+        </div>
+        <div class="row">
           <img class="user-photo" src="images/Nicolas.jpg" />
         </div>
-        <div class="col-md-2">
-          Calvin
-          <img class="user-photo" src="images/Calvin.jpg" />
-        </div>
-        <div class="col-md-2">
-          Raj
-          <img class="user-photo" src="images/Raj.jpg" />
-        </div>
-        <div class="col-md-2">
-          Alex
-          <img class="user-photo" src="images/Alex.jpg" />
-        </div>
+        <hr>
       </div>
-    </section>
+      <div class="col-md-2">
+        <div class="row">
+          <p>Calvin</p>
+        </div>
+        <div class="row">
+          <img class="user-photo rotate90" src="images/Calvin.jpg" />
+        </div>
+        <hr>
+      </div>
+      <div class="col-md-2">
+        <div class="row">
+          <p>Raj</p>
+        </div>
+        <div class="row">
+          <img class="user-photo rotate90" src="images/Raj.jpg" />
+        </div>
+        <hr>
+      </div>
+      <div class="col-md-2">
+        <div class="row">
+
+          <p>Alex</p>
+        </div>
+        <div class="row">
+
+          <img class="user-photo rotate90" src="images/Alex.jpg" />
+        </div>
+        <hr>
+      </div>
+    </div>
+  </section>
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
 
-  </body>
+</body>
 
 </html>

@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Staatliches');
 
 
 section {
-  height: 500px;
+  margin-bottom: 100px;
+}
+
+.navbar-brand {
+  font-family: 'Staatliches', cursive;
+  font-size: 30px;
+
 }
 
 #footer {
@@ -9,17 +16,13 @@ section {
 }
 
 .billboard {
-  margin-top: 150px;
-  margin-bottom: 500px;
+  margin-top: 50px;
+  margin-bottom: 200px;
 }
 
 .billboard-logo {
   width: 500px;
   height: 100px;
-}
-
-.billboard button {
-  margin-top: 50px;
 }
 
 .border-image {
@@ -53,27 +56,92 @@ section {
 }
 
 .example-post {
-  border: 1px solid gray;
+  padding: 20px;
+  border: 2px solid lightgrey;
+  border-radius: 5px;
 }
 
 .post-user {
-  height: 90px;
-  border: 1px solid blue;
 }
 
 .user-photo {
-  width: 50px;
-  height: 50px;
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+}
+
+.post-header {
+  border-bottom: 1px solid lightgrey;
 }
 
 .post-title {
-  border: 1px solid black;
+  margin-top: 5px;
+}
+.post-title h1 {
+  size: 30px;
 }
 
 .post-content {
-
+  padding: 20px;
+  border-bottom: 1px solid lightgray; 
 }
 
 .post-footer {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 20px;
+}
 
+.logo-container {
+  margin: 50px;
+}
+
+.crush-bar {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+/* .crush-bar input {
+  text-align: right;
+  width: 100px;
+} */
+.crush-button {
+  vertical-align: middle;
+
+}
+
+
+.loader {
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid orange; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+  visibility: hidden;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.team-content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-receipt {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.rotate90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }

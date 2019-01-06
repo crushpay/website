@@ -143,11 +143,6 @@ gulp.task('index', function () {
     .pipe(gulp.dest('dist/'))
 })
 
-gulp.task('privacy', function() {
-  return gulp.src('src/legal/*')
-    .pipe(gulp.dest('dist/legal'))
-})
-
 gulp.task('pages', function () {
   return gulp.src('pages/**/*')
     .pipe(gulp.dest('dist/pages'))
@@ -185,7 +180,7 @@ gulp.task('check', function(callback) {
 })
 
 gulp.task('build', function (callback) {
-  runSequence('clean:dist', ['css', 'js', 'index', 'privacy', 'images', 'imagemin', 'fonts'], callback)
+  runSequence('clean:dist', ['css', 'js', 'index', 'images', 'imagemin', 'fonts'], callback)
 })
 
 gulp.task('deploy', function (callback) {

@@ -1,164 +1,81 @@
+// Chad
 
-// RealFuel Javascript
+var url = 'https://fskbr5z7pf.execute-api.ap-northeast-2.amazonaws.com/dev'
 
-/* HANDLES THE REGISTER MODAL */
+var crushBar = document.getElementById('crush-bar')
+var crushButton = document.getElementById('crush-button')
+var paymentAmount = document.getElementById('payment-amount')
+var paymentId = document.getElementById('payment-id')
+var paymentAddress = document.getElementById('payment-address')
+var paymentCopyButton = document.getElementById('payment-copy-button')
+var paymentReceipt = document.getElementById('payment-receipt')
 
-var message = document.getElementById('modal_message')
+var loader = document.getElementById('loader')
 
-function messageForm (string) {
-  var div = document.createElement('p')
-  div.innerHTML = '<p>' + string + '</p>'
-  message.appendChild(div)
-}
-
-function clearModalMessage () {
-  message.innerHTML = ''
-}
-
-function submitRegisterForm (e) {
-  clearModalMessage()
-  var flag = 0
-  var firstname = cleanStr(document.getElementById('firstname').value)
-  var lastname = cleanStr(document.getElementById('lastname').value)
-  var email = cleanStr(document.getElementById('email').value)
-  var phone = cleanNum(document.getElementById('phone').value)
-
-  if (!firstname && !lastname && !email && !phone) {
-    messageForm('Please complete the form.')
-    --flag
-  } else if (!validatePhone(phone)) {
-    messageForm('Please add your country code.')
-    --flag
-  } else if (!validateEmail(email)) {
-    messageForm('Plese check your email address.')
-    --flag
-  } else if (!validateName(firstname)) {
-    messageForm('Please check your firstname.')
-    --flag
-  } else if (!validateName(lastname)) {
-    messageForm('Please check your lastname.')
-    --flag
-  } else if (flag < 0) {
-    clearModalMessage()
-  } else if (flag === 0) {
-    completeRegisterModal({
-      firstname: firstname, 
-      lastname: lastname, 
-      email: email, 
-      phone: cleanNum(phone)})
-  }
-}
-
-var modalForm = document.getElementById('modal_form')
-var registerComplete = document.getElementById('modal_complete')
-var modalGdpr = document.getElementById('modal_gdpr')
-var gdpr = document.getElementById('modal_gdpr_input')
-
-var registerToken = {
-  get: function () {
-    return localStorage.getItem('realfuel')
-  },
-  set: function (payload) {
-    var token = JSON.stringify(payload)
-    return localStorage.setItem('realfuel', token)
-  }
-}
-
-function completeRegisterModal (userData) {
-  registerToken.set(userData)
-  modalForm.style.visibility = 'hidden'
-  registerComplete.style.visibility = 'visible'
-  postRequest(userData)
-}
-
-function validateName (name) {
-  var namereg = /^[a-z][a-z\s]*$/
-  return namereg.test(String(name).toLowerCase())
-}
-
-function validateEmail (email) {
-  var emailreg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return emailreg.test(String(email).toLowerCase())
-}
-
-function validatePhone (num) {
-  var clean = cleanNum(num)
-  var phonereg = /^[a-zA-Z0-9\-().\s]{10,15}$/
-  return phonereg.test(String(clean))
-}
-
-function cleanNum(num) {
-  var cleanNum = num.replace(/[^\d]/g, '')
-  return cleanNum
-}
-
-function cleanStr(str) {
-  var cleanStr = str.replace(/\s/g, '')
-  return cleanStr
-}
-
-var modal = document.getElementById('myModal')
-
-function openModal () {
-  toggleGdprNotice()
-  modal.style.display = 'block'
-  if (registerToken.get()) {
-    modalForm.style.visibility = 'hidden'
-    registerComplete.style.visibility = 'visible'
-  }
-  clearModalMessage()
-}
-
-function closeModal () {
-  modal.style.display = 'none'
-  gdpr.checked = false
-}
-
-function gdprOk () {
-  if (gdpr.value === 'on') {
-    modalGdpr.style.visibility = 'hidden'
-    modalForm.style.visibility = 'visible'
-  }
-}
-
-function toggleGdprNotice () {
-  if (registerToken.get()) {
-    modalGdpr.style.visibility = 'hidden'
-  } else {
-    modalGdpr.style.visibility = 'visible'
-    modalForm.style.visibility = 'hidden'
-  }
-}
-
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = 'none'
-    clearModalMessage()
-  }
-}
-
-function postRequest (userInfo) {
-  // var url = document.URL;
-  // var url = 'http://localhost:4444/users'
-  var aws = "https://cm0djctn7l.execute-api.ap-southeast-1.amazonaws.com/develop/users"
-  postData(aws, userInfo)
-    .then(function () { console.log('registered') })
-    .catch(function (error) { console.error(error) })
-}
-
-function postData (url, data) {
-  return fetch(url, {
-    body: JSON.stringify(data), // must match 'Content-Type' header
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, same-origin, *omit
+function xhrPostHelper(uri, payload, callback) {
+  fetch(url + uri, {
+    body: JSON.stringify(payload), 
+    cache: 'no-cache',
+    credentials: 'same-origin',
     headers: {
-      'user-agent': 'Mozilla/4.0 MDN Example',
+      'user-agent': 'Mozilla/4.0 CrushPay.io',
       'content-type': 'application/json'
     },
-    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, cors, *same-origin
-    redirect: 'follow', // manual, *follow, error
-    referrer: 'no-referrer' // *client, no-referrer
+    method: 'POST',
+    mode: 'cors',
+    redirect: 'follow',
+    referrer: 'no-referrer' 
   })
-    .then(function(response) { response.json() }) // parses response to JSON
+  .then(function (response) {
+    var newPromise = Promise.resolve(response.json())
+    return newPromise.then(function(data) { callback(data) })
+  })
+}
+
+function createPaymentRequest () {
+  var amount = document.getElementById('amount-input')
+
+  if (amount.value) {
+    var payload = { amount: amount.value }
+    console.log('creating lightning payment for ', amount.value)
+    xhrPostHelper('/payment/create', payload, handleCreatePaymentResponse)
+    loader.style.visibility = 'visible'
+    paymentReceipt.innerHTML = ''
+  } else {
+    console.log('no amount given')
+  }
+}
+
+function handleCreatePaymentResponse (resp) {
+  console.log(resp)
+  var id = resp.id
+  paymentAddress.innerHTML = ''
+  paymentAddress.append(resp.address)
+  // crushBar.style.backgroundColor = 'lightcoral'
+  crushButton.style.visibility = 'hidden'
+  checkPaymentStatusRequest(id)
+}
+
+function checkPaymentStatusRequest (id) {
+  console.log('checking payment status', id)
+  var payload = { id: id }
+  xhrPostHelper('/payment/check', payload, handleCheckPaymentResponse)
+}
+
+function handleCheckPaymentResponse(resp) {
+  if (resp.status === 'unpaid') {
+    console.log(resp)
+    setTimeout(function () {
+      return checkPaymentStatusRequest(resp.id)
+    }, 1000)
+  } else {
+    console.log(resp)
+    paymentAddress.innerHTML = ''
+    paymentReceipt.innerHTML = '<b>Payment Successful. Lightning Invoice:</b><br><p>' + JSON.stringify(resp.lightning_invoice) + '</p>'
+    paymentCopyButton.innerHTML = ''
+    crushBar.style.backgroundColor = 'white'
+    crushButton.style.visibility = 'visible'
+    loader.style.visibility = 'hidden'
+    return true
+  }
 }
