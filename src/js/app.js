@@ -1,6 +1,6 @@
 // Chad
 
-var url = 'https://fskbr5z7pf.execute-api.ap-northeast-2.amazonaws.com/dev'
+var url = 'https://api.crushpay.io/dev'
 
 var crushBar = document.getElementById('crush-bar')
 var crushButton = document.getElementById('crush-button')
