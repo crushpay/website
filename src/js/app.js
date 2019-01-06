@@ -30,6 +30,9 @@ function xhrPostHelper(uri, payload, callback) {
     var newPromise = Promise.resolve(response.json())
     return newPromise.then(function(data) { callback(data) })
   })
+  .catch(function(error) {
+    console.log('xhr request failed:', error)
+  })
 }
 
 function createPaymentRequest () {
@@ -71,7 +74,9 @@ function handleCheckPaymentResponse(resp) {
   } else {
     console.log(resp)
     paymentAddress.innerHTML = ''
-    paymentReceipt.innerHTML = '<b>Payment Successful. Lightning Invoice:</b><br><p>' + JSON.stringify(resp.lightning_invoice) + '</p>'
+    var tmpl = '<b>Payment Successful. Lightning Invoice:</b><br><p>'
+                + JSON.stringify(resp.lightning_invoice) + '</p>'
+    paymentReceipt.innerHTML = tmpl
     paymentCopyButton.innerHTML = ''
     crushBar.style.backgroundColor = 'white'
     crushButton.style.visibility = 'visible'
