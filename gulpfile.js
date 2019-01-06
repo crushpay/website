@@ -128,6 +128,10 @@ gulp.task('images', function () {
     .pipe(gulp.dest('dist/images'))
 })
 
+gulp.task('favicon', function () {
+  return gulp.src('src/favicon.ico')
+    .pipe(gulp.dest('dist/'))
+})
 gulp.task('js', function (cb) {
   pump([
     gulp.src('src/js/**/*.js'),
@@ -180,9 +184,9 @@ gulp.task('check', function(callback) {
 })
 
 gulp.task('build', function (callback) {
-  runSequence('clean:dist', ['css', 'js', 'index', 'images', 'imagemin', 'fonts'], callback)
+  runSequence('clean:dist', ['css', 'js', 'favicon', 'index', 'images', 'imagemin', 'fonts'], callback)
 })
 
 gulp.task('deploy', function (callback) {
-  runSequence('build', 'check', ['publish'], callback)
+  runSequence('build', ['publish'], callback)
 })

@@ -54,8 +54,8 @@ function handleCreatePaymentResponse (resp) {
   var id = resp.id
   paymentAddress.innerHTML = ''
   paymentAddress.append(resp.address)
-  // crushBar.style.backgroundColor = 'lightcoral'
   crushButton.style.visibility = 'hidden'
+  paymentCopyButton.innerHTML = '<b>Copy Lightning request to <a href="https://htlc.me/" target="_blank">wallet</a> and send!</b>'
   checkPaymentStatusRequest(id)
 }
 
@@ -81,6 +81,7 @@ function handleCheckPaymentResponse(resp) {
     crushBar.style.backgroundColor = 'white'
     crushButton.style.visibility = 'visible'
     loader.style.visibility = 'hidden'
+    paymentCopyButton.innerHTML = ''
     return true
   }
 }
