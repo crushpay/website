@@ -1,5 +1,6 @@
 /* latin-ext */
 @font-face {
+  font-display: 1;
   font-family: 'Staatliches';
   font-style: normal;
   font-weight: 400;
@@ -8,6 +9,7 @@
 }
 /* latin */
 @font-face {
+  font-display: 1;
   font-family: 'Staatliches';
   font-style: normal;
   font-weight: 400;
